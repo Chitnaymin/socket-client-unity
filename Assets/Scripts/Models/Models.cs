@@ -5,21 +5,13 @@ namespace Models {
 
 	[Serializable]
 	public class PlayerData {
+		
 		public string playerId { get; set; }
-		//public float x { get; set; }
-		//public float y { get; set; }
 		public Position position { get; set; }
 
 		public PlayerData(string id, Position pos) {
 			playerId = id;
 			position = pos;
-		}
-
-		public PlayerData() {
-		}
-
-		public void Print() {
-			Debug.Log("I am " + playerId);
 		}
 	}
 

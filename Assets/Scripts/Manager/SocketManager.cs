@@ -7,7 +7,7 @@ using static SocketIOUnity;
 public class SocketManager : Singleton<SocketManager> {
 	private SocketIOUnity client;
 	private string _playerID;
-
+	
 	public async void ClientConnect() {
 		client = new SocketIOUnity("http://localhost:3000");
 		client.unityThreadScope = UnityThreadScope.Update;
