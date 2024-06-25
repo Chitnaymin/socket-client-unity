@@ -1,27 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
 	public float speed = 5f;
-	private Vector3 lastPosition;
+    private string _playerId;
+    private bool _isLocalPlayer;
 
-	void Start() {
-		lastPosition = transform.position;
-	}
+    public string playerId { get => _playerId; set => _playerId = value; }
+    public bool isLocalPlayer { get => _isLocalPlayer; set => _isLocalPlayer = value; }
 
-	void Update() {
-		float moveHorizontal = Input.GetAxis("Horizontal");
-		float moveVertical = Input.GetAxis("Vertical");
+    private void Update() {
+        if (!isLocalPlayer) return;
 
-		Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0.0f);
-		transform.Translate(movement * speed * Time.deltaTime);
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
 
-		if (Vector3.Distance(transform.position, lastPosition) > 0.1f) {
-			lastPosition = transform.position;
-			SocketManager.Instance().SendPlayerPosition(transform.position);
-		}
-	}
-	
+        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+
+        transform.Translate(movement * speed * Time.deltaTime, Space.World);
+
+
+        // Rotate the player to face the movement direction
+        //if (movement != Vector3.zero) {
+        //	Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
+        //	transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        //}
+    }
 }

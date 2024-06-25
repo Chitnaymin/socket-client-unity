@@ -1,42 +1,34 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
     public TMP_Text txtUID, txtStatus;
-    public Button btnPlayer1;
+    public Button btnPlayer;
 
-	private new void Awake() {
-		btnPlayer1.onClick.AddListener(onclickBtnPlayer1);
-	}
 	// Start is called before the first frame update
-	void Start()
+	private void Start()
     {
-        StartCoroutine(setUID());
-    }
+		btnPlayer.onClick.AddListener(onclickBtnPlayer);
+	}
 
-	IEnumerator setUID() {
+	public IEnumerator SetUID(string id) {
 		yield return new WaitForSeconds(1f);
-		txtUID.text = ($"UID : {SocketManager.Instance().playerID}");
+		txtUID.text = ($"UID : {id}");
 	}
 
 	IEnumerator setStatus() {
 		yield return new WaitForSeconds(1f);
-		txtUID.text = SocketManager.Instance().strStatus;
+		//txtUID.text = SocketManager.Instance().strStatus;
 	}
 
-	void onclickBtnPlayer1() {
+	void onclickBtnPlayer() {
 		SocketManager.Instance().ClientConnect();
 	}
 
-	// Update is called once per frame
-	void Update()
-    {
-        
-    }
+	public void HideBtnPlayer() {
+		btnPlayer.gameObject.SetActive(false);
+	}
 }
